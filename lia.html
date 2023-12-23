@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        body {
+            padding-top: 56px;
+            /* Adjust this value according to your header height */
+        }
+
+        .fixed-top {
+            transition: background-color 0.3s ease, opacity 0.3s ease;
+        }
+
+        .transparent-bg {
+            background-color: rgba(255, 255, 255, 0.9);
+            /* Adjust the transparency here */
+        }
+
+        .navbar-brand.active {
+            font-weight: bold;
+            color: #ff6347;
+            /* Adjust the active state color */
+        }
+
+        .parallax-banner {
+            position: relative;
+            overflow: hidden;
+            height: 500px;
+            /* Set the desired height of your banner */
+        }
+
+        .parallax-image {
+            width: 100%;
+            height: auto;
+            transform: rotate(-2deg);
+        }
+
+        .parallax-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+        }
+
+        .parallax-content h2 {
+            font-size: 3rem;
+        }
+
+        .parallax-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            /* Adjust the overlay color and transparency */
+        }
+
+        .banner-container {
+            position: relative;
+            overflow: hidden;
+            height: 600px;
+            /* Adjust the height of the banner */
+        }
+
+        .banner-image {
+            width: 100%;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .banner-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            text-align: center;
+        }
+
+        /* Parallax effect */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            /* Adjust the height of the thumbnail */
+            object-fit: cover;
+        }
+
+        .card-title {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 3;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top transparent-bg" style="background-color: #FF6C22;">
+        <div class="container-fluid">
+            <a class="navbar-brand " href="#">
+                <img src="suitmedia.jpeg" alt="" width="35" height="29">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Work</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Service</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Ideas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Careers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="banner-container">
+        <img src="unri.jpeg" alt="Banner Image" class="banner-image parallax">
+        <div class="banner-text">
+            <h1>MSIB</h1>
+            <p>Wisata Masa Depan</p>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <label for="sortSelect" class="form-label">Sort By:</label>
+                    <select id="sortSelect" class="form-select">
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="perPageSelect" class="form-label">Show Per Page:</label>
+                    <select id="perPageSelect" class="form-select">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="cardContainer">
+            <!-- Cards will be dynamically added here -->
+        </div>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+        // document.addEventListener("DOMContentLoaded", function () {
+        //     var navbar = document.querySelector('.navbar');
+        //     var navbarBrand = document.querySelector('.navbar-brand');
+        //     var sections = document.querySelectorAll('section');
+
+        //     window.addEventListener('scroll', function () {
+        //         var scrollPosition = window.scrollY;
+
+        //         if (scrollPosition > 100) {
+        //             navbar.classList.add('fixed-top');
+        //             navbar.classList.remove('transparent-bg');
+        //         } else {
+        //             navbar.classList.remove('fixed-top');
+        //             navbar.classList.add('transparent-bg');
+        //         }
+
+        //         sections.forEach(function (section) {
+        //             var top = section.offsetTop - navbar.clientHeight;
+        //             var bottom = top + section.clientHeight;
+
+        //             if (scrollPosition >= top && scrollPosition < bottom) {
+        //                 navbarBrand.classList.remove('active');
+        //                 document.querySelector('.navbar-brand[href="#' + section.id + '"]').classList.add('active');
+        //             } else {
+        //                 document.querySelector('.navbar-brand[href="#' + section.id + '"]').classList.remove('active');
+        //             }
+        //         });
+        //     });
+        // });
+        document.addEventListener("DOMContentLoaded", function () {
+            var parallaxElements = document.querySelectorAll('.parallax');
+
+            window.addEventListener('scroll', function () {
+                parallaxElements.forEach(function (element) {
+                    var scrolled = window.scrollY;
+                    var rate = element.dataset.rate || 0.5;
+                    element.style.transform = 'translate3d(0, ' + (scrolled * rate) + 'px, 0)';
+                });
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+            // Mock data (replace this with your actual data)
+            var data = [
+                { title: "Title 1", image: "batik.png" },
+                { title: "Title 2", image: "rabiul.png" },
+                { title: "Title 3", image: "batik.png" },
+                { title: "Title 4", image: "rabiul.png" },
+                { title: "Title 5", image: "batik.png" },
+                { title: "Title 6", image: "rabiul.png" },
+                { title: "Title 7", image: "batik.png" },
+                { title: "Title 8", image: "rabiul.png" },
+                { title: "Title 9", image: "batik.png" },
+                { title: "Title 10", image: "rabiul.png" },
+                { title: "Title 11", image: "batik.png" },
+                { title: "Title 12", image: "rabiul.png" },
+                // Add more items as needed
+            ];
+
+            var cardContainer = document.getElementById('cardContainer');
+            var sortSelect = document.getElementById('sortSelect');
+            var perPageSelect = document.getElementById('perPageSelect');
+
+            function renderCards() {
+                cardContainer.innerHTML = '';
+                var sortedData = sortData(data, sortSelect.value);
+                var perPage = parseInt(perPageSelect.value, 10);
+                var totalPages = Math.ceil(sortedData.length / perPage);
+
+                for (var i = 0; i < totalPages; i++) {
+                    var start = i * perPage;
+                    var end = start + perPage;
+                    var pageData = sortedData.slice(start, end);
+
+                    pageData.forEach(function (item) {
+                        var card = document.createElement('div');
+                        card.className = 'col-md-4';
+                        card.innerHTML = `
+            <div class="card">
+              <img src="${item.image}" class="card-img-top" alt="${item.title}">
+              <div class="card-body">
+                <h5 class="card-title">${item.title}</h5>
+                <!-- Add other card content here -->
+              </div>
+            </div>
+          `;
+                        cardContainer.appendChild(card);
+                    });
+                }
+            }
+
+            function sortData(data, sortType) {
+                if (sortType === 'newest') {
+                    return data.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
+                } else if (sortType === 'oldest') {
+                    return data.slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+                }
+            }
+
+            // Initial render
+            renderCards();
+
+            // Event listeners for sorting and show-per-page
+            sortSelect.addEventListener('change', function () {
+                renderCards();
+            });
+
+            perPageSelect.addEventListener('change', function () {
+                renderCards();
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+                // URL API
+                const apiUrl = "https://suitmedia-backend.suitdev.com/api/ideas";
+
+                // Parameter
+                const params = new URLSearchParams({
+                    'page[number]': 1,
+                    'page[size]': 10,
+                    'append[]': ['small_image', 'medium_image'],
+                    'sort': '-published_at'
+                });
+
+                // Fetch data using Fetch API
+                fetch(`${apiUrl}?${params.toString()}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Process the retrieved data
+                        displayData(data);
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                    });
+
+                // Display data in the HTML
+                function displayData(data) {
+                    const apiDataElement = document.getElementById('apiData');
+                    apiDataElement.innerHTML = JSON.stringify(data, null, 2);
+                }
+            });
+    </script>
+</body>
+
+</html>
